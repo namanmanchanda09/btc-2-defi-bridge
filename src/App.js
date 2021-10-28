@@ -1,6 +1,6 @@
 import './App.css';
 import * as React from "react";
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import RenJS from "@renproject/ren";
 import { Bitcoin, Ethereum } from "@renproject/chains";
 import abi from './artifacts/contracts/TokenSwap.sol/TokenSwap.json';
@@ -147,8 +147,8 @@ export default function App() {
           await approveTx.wait();
           console.log("Smart contract approved from UNI");
 
-
-          const swapTx = await tokenSwapContract.swap(uniAddress, testBTCAddress, noTokens, 1, currAccount);
+          const tokens = ethers.utils.parseEther(`${noTokens}`);
+          const swapTx = await tokenSwapContract.swap(uniAddress, testBTCAddress, tokens, 1, currAccount);
           await swapTx.wait();
           console.log('TOKENS SWAPPED...')
         }catch(e){

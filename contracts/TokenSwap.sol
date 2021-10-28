@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
 
+/*
+* ERC20 interface 
+*/
 interface IERC20 {
     function totalSupply() external view returns (uint);
     function balanceOf(address account) external view returns (uint);
@@ -16,6 +19,9 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
 }
 
+/*
+* UniswapV2Router interface to interact with the V2 protocol's swap function
+*/
 interface IUniswapV2Router {
   function getAmountsOut(uint256 amountIn, address[] memory path)
     external
@@ -55,10 +61,11 @@ interface IUniswapV2Factory {
 
 contract TokenSwap {
     
-    address private constant UNISWAP_V2_ROUTER = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+    address private constant UNISWAP_V2_ROUTER = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D; // router Kovan address
     
-    address private constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
+    address private constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C; // weth Kovan address
     
+    // functino to swap the erc20 tokens
    function swap(address _tokenIn, address _tokenOut, uint256 _amountIn, uint256 _amountOutMin, address _to) external {
     IERC20(_tokenIn).transferFrom(msg.sender, address(this), _amountIn);
     IERC20(_tokenIn).approve(UNISWAP_V2_ROUTER, _amountIn);
